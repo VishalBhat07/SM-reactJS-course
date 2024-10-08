@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .data p {
+      border: 2px solid black;
+      width: 50%;
+      padding: 5px;
+      margin: 5px;
+    }
+  </style>
+  <body>
+    <div class="data"></div>
+  </body>
+  <script>
+    let list = document.querySelector(".data");
+
+    async function getData() {
+      try {
+        const APIresponse = await fetch("https://dummyjson.com/products", {
+          method: "GET",
+        });
+
+        const result = await APIresponse.json();
+
+        let text = result.products
+          .map((singleItem, index) => {
+            return `<p>${singleItem.id}. ${singleItem.title} : ${singleItem.price} </p>`;
+          })
+          .join(" ");
+
+        list.innerHTML = text;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    getData();
+  </script>
+</html>
